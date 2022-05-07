@@ -1,38 +1,22 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+import xmlrpc.client
 def StrLen(str):
-    messagebox.showinfo("Длина строки",f"Длина строки = {len(str)}")
+    messagebox.showinfo("Длина строки",f"Длина строки = {proxy.StrLen(str)}")
 def SubstrInStr(str,sub):
-    messagebox.showinfo("Подсчет подстроки", f"Подстрока {sub} встречается в строке {str} {str.count(sub)} раз")
+    messagebox.showinfo("Подсчет подстроки", f"Подстрока {sub} встречается в строке {str} {proxy.SubstrInStr(str,sub)} раз")
 def WordCountInStr(str):
-    messagebox.showinfo("Количество слов", f"Количество слов в строке {str} = {len(str.split())}")
+    messagebox.showinfo("Количество слов", f"Количество слов в строке {proxy.WordCountInStr(str)} = {len(str.split())}")
 def StrType(str):
-    str = str.replace(" ","")
-    if str.isdigit():
-        res = "В строке содержатся только цифры"
-    elif str.isalpha():
-        res = "В строке содержатся только буквы"
-    elif str.isalnum():
-        res = "В строке содержатся буквы и цифры"
-    elif str =="":
-        res = "Строка пустая"
-    else:
-        res = "В строке содержатся специальные символы"
-    messagebox.showinfo("Тип строки", f"{res}")
+    messagebox.showinfo("Тип строки", f"{proxy.StrType(str)}")
 def StrFormat(str):
-    if str.isupper():
-        res = "Только заглавные символы"
-    elif str.islower():
-        res = "Только строчные символы"
-    else:
-        res = "И заглавные и строчные символы"
-    return messagebox.showinfo("Формат строки", f"{res}")
+    messagebox.showinfo("Формат строки", f"{proxy.StrFormat(str)}")
 
 
 if __name__ == '__main__':
     window = tk.Tk()
-
+    proxy = xmlrpc.client.ServerProxy("http://localhost:6789/")
     MainLabel = Label(text="Введите строку")
     StrEntry = Entry()
     SubLabel = Label(text="Введите подстроку")
